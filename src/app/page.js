@@ -8,6 +8,7 @@ import { FaSearch } from "react-icons/fa";
 export default function Home() {
   const [weatherInfo, setWeatherInfo] = useState({});
   const [search, setSearch] = useState("Colombo");
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
     getWeatherReport();
@@ -15,10 +16,13 @@ export default function Home() {
 
   const getWeatherReport = async () => {
     try {
+      setloading(true);
       const resp = await WeatherService.getWeatherStatus(search);
       setWeatherInfo(resp);
     } catch (error) {
       console.log(error);
+    } finally {
+      setloading(false);
     }
   };
 
@@ -50,7 +54,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <WeatherReport weatherReportInfo={weatherInfo} />
+      <WeatherReport weatherReportInfo={weatherInfo} loading={loading} />
     </div>
   );
 }

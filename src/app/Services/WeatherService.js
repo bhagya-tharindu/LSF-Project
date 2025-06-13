@@ -2,11 +2,13 @@ import instance from "../utils/axios";
 
 const getWeatherStatus = async (location) => {
   try {
-    const response = await instance.get("/current.json", {
+    const response = await instance.get("/forecast.json", {
       params: {
         key: process.env.NEXT_PUBLIC_WEATHER_API_KEY,
         q: location,
         aqi: "no",
+        alerts: "no",
+        days: 1,
       },
     });
     return response.data;
