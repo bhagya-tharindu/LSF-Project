@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
 @theme {
   --breakpoint-sm: 375px;
   --breakpoint-md: 768px;
   --breakpoint-xl: 1440px;
 }
+
+@plugin '../../hero.js';
+
+/* .w-\[calc\(var\(--visible-months\)_\*_var\(--calendar-width\)\)\] {
+  background: white;
+} */

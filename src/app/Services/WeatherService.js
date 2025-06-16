@@ -18,4 +18,20 @@ const getWeatherStatus = async (location) => {
   }
 };
 
-export default { getWeatherStatus };
+const getFutureForecast = async (date, location) => {
+  try {
+    const response = await instance.get("/future.json", {
+      params: {
+        key: process.env.NEXT_PUBLIC_WEATHER_API_KEY,
+        q: location,
+        dt: date,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Weather API error:", error?.response?.data || error.message);
+    return error?.response?.data || error.message;
+  }
+};
+
+export default { getWeatherStatus, getFutureForecast };

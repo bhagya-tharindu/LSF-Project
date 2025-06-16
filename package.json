@@ -9,9 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/button": "^2.2.21",
+    "@heroui/date-picker": "^2.3.21",
     "@heroui/input": "^2.4.21",
+    "@heroui/modal": "^2.2.18",
+    "@heroui/react": "^2.8.0-beta.7",
+    "@heroui/tabs": "^2.2.18",
+    "@internationalized/date": "^3.8.2",
     "@lottiefiles/dotlottie-react": "^0.14.1",
+    "ag-charts-react": "^11.3.2",
     "axios": "^1.9.0",
+    "dayjs": "^1.11.13",
     "next": "15.3.3",
     "rc-input": "^1.8.0",
     "react": "^19.0.0",

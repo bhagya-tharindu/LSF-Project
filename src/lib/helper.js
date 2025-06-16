@@ -3,19 +3,19 @@ import { TbTemperatureCelsius } from "react-icons/tb";
 const currentWeatherInfo = [
   {
     id: 1,
-    name: "Humidity",
-    tag: "%",
-    weatherApiPropertyName: "humidity",
-    iconName:
-      "https://lottie.host/5c1b8f6b-21ae-4b49-b15e-d82c910ccbd8/8lAffB0hGT.lottie",
-  },
-  {
-    id: 2,
     name: "Temperature",
     tag: <TbTemperatureCelsius size={24} />,
     weatherApiPropertyName: "temp_c",
     iconName:
       "https://lottie.host/f0caaa53-9004-4def-a794-920819ce2a11/6LNG9ur0Ke.lottie",
+  },
+  {
+    id: 2,
+    name: "Humidity",
+    tag: "%",
+    weatherApiPropertyName: "humidity",
+    iconName:
+      "https://lottie.host/5c1b8f6b-21ae-4b49-b15e-d82c910ccbd8/8lAffB0hGT.lottie",
   },
   {
     id: 3,

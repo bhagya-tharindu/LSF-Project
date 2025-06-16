@@ -6,23 +6,47 @@ import { Input } from "@heroui/input";
 import { FaSearch } from "react-icons/fa";
 
 export default function Home() {
-  const [weatherInfo, setWeatherInfo] = useState({});
+  const [current, setCurrent] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [forecast, setForecast] = useState(null);
   const [search, setSearch] = useState("Colombo");
   const [loading, setloading] = useState(true);
+  const [forecastIsLoading, setForecastIsloading] = useState(false);
+  const [initialDate, setInitialDate] = useState(null);
 
   useEffect(() => {
     getWeatherReport();
   }, []);
 
+  useEffect(() => {
+    if (initialDate) {
+      fetchForeCastData();
+    }
+  }, [initialDate]);
+
   const getWeatherReport = async () => {
     try {
       setloading(true);
       const resp = await WeatherService.getWeatherStatus(search);
-      setWeatherInfo(resp);
+      setCurrent(resp.current);
+      setLocation(resp.location);
+      setForecast(resp.forecast);
     } catch (error) {
       console.log(error);
     } finally {
       setloading(false);
+    }
+  };
+
+  const fetchForeCastData = async () => {
+    try {
+      setForecastIsloading(true);
+      const resp = await WeatherService.getFutureForecast(initialDate, search);
+      setForecast(resp.forecast);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setForecastIsloading(false);
     }
   };
 
@@ -44,6 +68,7 @@ export default function Home() {
               onClear={() => {
                 setSearch("");
               }}
+              variant="bordered"
             />
             <FaSearch
               className="cursor-pointer"
@@ -54,7 +79,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <WeatherReport weatherReportInfo={weatherInfo} loading={loading} />
+      <WeatherReport
+        forecast={forecast}
+        current={current}
+        location={location}
+        loading={loading}
+        initialDate={initialDate}
+        setInitialDate={setInitialDate}
+        forecastIsLoading={forecastIsLoading}
+      />
     </div>
   );
 }
