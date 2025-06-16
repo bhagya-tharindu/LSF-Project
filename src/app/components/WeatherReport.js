@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton } from "@heroui/skeleton";
 import helper from "@/lib/helper";
 import DatePickerComponent from "./DatePickerComponent";
 import PopOverModal from "./PopOverModal";
@@ -15,11 +14,13 @@ const WeatherReport = ({
   location,
   loading,
   setInitialDate,
-  initialDate,
   forecastIsLoading,
+  foreCastSelectedTab,
+  setForecastSelectedTab,
 }) => {
   const [isLoading, setIsLoading] = useState(loading);
   const [forecastLoader, setForecastLoader] = useState(forecastIsLoading);
+  const [selectedTab, setSelectedTab] = useState(foreCastSelectedTab);
 
   useEffect(() => {
     setIsLoading(loading);
@@ -28,21 +29,20 @@ const WeatherReport = ({
 
   return (
     <div className="mt-[40px]">
-      <h2 className="text-center text-2xl font-medium mb-8">Current Weather</h2>
-      <div className=" mb-6 xl:flex xl:justify-between xl:items-center">
-        <div>
-          <h2 className="text-[16px] font-medium">
-            Country: {location?.country}
-          </h2>
-
-          <h2 className="text-[16px] font-medium ">
-            Location: {location?.name}
-          </h2>
-        </div>
-
+      <h2 className="text-center text-2xl font-medium mb-8">
+        Current Weather in{" "}
+        {isLoading ? (
+          <Skeleton className="w-[100px] h-[30px] inline-block" />
+        ) : (
+          <span>
+            {location?.name},{location?.country}
+          </span>
+        )}
+      </h2>
+      <div className="mb-6 flex justify-center md:justify-end">
         <div>
           {isLoading ? (
-            <Skeleton className="w-[80px] h-[80px]  rounded-[50%]" />
+            <Skeleton className="w-[80px] h-[80px]  rounded-[50%] mx-auto" />
           ) : (
             <img
               src={current?.condition.icon}
@@ -50,13 +50,24 @@ const WeatherReport = ({
               alt="status-icon"
             />
           )}
-          <h2 className="text-[16px] font-medium text-center">
-            {current?.condition.text}
-          </h2>
+          {isLoading ? (
+            <Skeleton className="w-[80px] h-[20px] mt-2 mx-auto" />
+          ) : (
+            <h2 className="text-[16px] font-medium text-center">
+              {current?.condition.text}
+            </h2>
+          )}
+          {isLoading ? (
+            <Skeleton className="w-[80px] h-[20px] mt-2 mx-auto" />
+          ) : (
+            <h2 className="text-center">
+              {location?.name},{location?.country}
+            </h2>
+          )}
         </div>
       </div>
 
-      <div className="xl:grid xl:grid-cols-4 xl:gap-3">
+      <div className="grid justify-center justify-center md:grid-cols-2 xl:grid-cols-4 md:gap-3 mb-10">
         {helper.currentWeatherInfo.map((singleCurrentWeatherInfo) => (
           <div
             key={singleCurrentWeatherInfo.id}
@@ -71,7 +82,7 @@ const WeatherReport = ({
             <div className="text-2xl font-medium">
               <h2>{singleCurrentWeatherInfo.name}</h2>
               {isLoading ? (
-                <Skeleton />
+                <Skeleton className="w-[100px] h-[30px]" />
               ) : (
                 <p className="flex items-center">
                   {current?.[singleCurrentWeatherInfo.weatherApiPropertyName]}
@@ -86,40 +97,68 @@ const WeatherReport = ({
       {/* forecast section */}
       <div>
         <h2 className="text-center text-2xl font-medium mb-10">
-          Weather Forecast
+          Weather Forecast of{" "}
+          {isLoading ? (
+            <Skeleton className="w-[100px] h-[30px] inline-block" />
+          ) : (
+            <span>
+              {location?.name},{location?.country}
+            </span>
+          )}
         </h2>
+
         <DatePickerComponent
-          initialDate={initialDate}
           setInitialDate={setInitialDate}
+          current={current}
         />
 
-        <div className="flex flex-wrap gap-4 mb-3">
-          <Tabs radius="full" color="primary">
-            <Tab key="Temperature" title="Feels like temperature" />
-            <Tab key="Humidity" title="Humidity" />
-            <Tab key="UV-Index" title="UV Index" />
-            <Tab key="Wind-Speed" title="Wind Speed" />
+        <div className="w-full overflow-x-auto whitespace-nowrap mb-4 scrollbar-hidden">
+          <Tabs
+            radius="full"
+            onSelectionChange={(tab) => {
+              setSelectedTab(tab);
+              setForecastSelectedTab(tab);
+            }}
+            color="primary"
+          >
+            <Tab key="feelslike_c" title="Feels like temperature" />
+            <Tab key="humidity" title="Humidity" />
+            <Tab key="uv" title="UV Index" />
+            <Tab key="wind_kph" title="Wind Speed" />
           </Tabs>
         </div>
-        <WeatherChartComponent forecast={forecast} />
-        {loading || forecastLoader ? (
-          <div className="xl:grid xl:grid-cols-4 xl:gap-3">
-            {Array(4)
-              .fill(0)
-              .map((arr, ind) => (
-                <Skeleton key={ind} className="h-[150px]" />
+
+        <div>
+          {loading || forecastIsLoading ? (
+            <Skeleton className="w-full h-[320px] rounded-2xl" />
+          ) : (
+            <WeatherChartComponent
+              selectedTab={selectedTab}
+              forecast={forecast}
+            />
+          )}
+        </div>
+
+        <div className="mt-4">
+          {loading || forecastLoader ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+              {Array(4)
+                .fill(0)
+                .map((arr, ind) => (
+                  <Skeleton key={ind} className="h-[150px] rounded-2xl" />
+                ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4 md:gap-y-5">
+              {forecast.map((singleForecast) => (
+                <PopOverModal
+                  key={singleForecast.time}
+                  singleForecast={singleForecast}
+                />
               ))}
-          </div>
-        ) : (
-          <div className="xl:grid xl:grid-cols-4 xl:gap-3 xl:gap-y-5">
-            {forecast.forecastday[0].hour.map((singleForecast) => (
-              <PopOverModal
-                key={singleForecast.time}
-                singleForecast={singleForecast}
-              />
-            ))}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
       {/* end of forecast section */}
     </div>

@@ -2,6 +2,7 @@
   "name": "lsf-project",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,6 +15,7 @@
     "@heroui/input": "^2.4.21",
     "@heroui/modal": "^2.2.18",
     "@heroui/react": "^2.8.0-beta.7",
+    "@heroui/skeleton": "^2.2.13",
     "@heroui/tabs": "^2.2.18",
     "@internationalized/date": "^3.8.2",
     "@lottiefiles/dotlottie-react": "^0.14.1",
@@ -21,11 +23,9 @@
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
     "next": "15.3.3",
-    "rc-input": "^1.8.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.5.0",
-    "react-loading-skeleton": "^3.5.0"
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -14,7 +14,7 @@ const getWeatherStatus = async (location) => {
     return response.data;
   } catch (error) {
     console.log("Weather API error:", error?.response?.data || error.message);
-    return error?.response?.data || error.message;
+    throw error?.response?.data || error.message;
   }
 };
 

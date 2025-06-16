@@ -10,6 +10,11 @@
 
 @plugin '../../hero.js';
 
-/* .w-\[calc\(var\(--visible-months\)_\*_var\(--calendar-width\)\)\] {
-  background: white;
-} */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

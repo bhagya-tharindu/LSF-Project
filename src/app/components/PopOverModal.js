@@ -7,6 +7,7 @@ import {
   useDisclosure,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
+import helper from "@/lib/helper";
 
 export default function PopOverModal({ singleForecast }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -23,42 +24,40 @@ export default function PopOverModal({ singleForecast }) {
           alt="weather-icon"
         />
         <h3>{singleForecast?.condition.text}</h3>
-        <h3>Time: {singleForecast?.time}</h3>
+        <h3 className="font-medium text-[18px] mt-2">
+          {singleForecast?.time.split(" ")[1]}
+        </h3>
       </div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                {singleForecast?.time.split(" ")[1]}
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
+                <div className="grid md:grid-cols-2 gap-4 justify-center">
+                  {helper.modalWeatherInfo.map((singleInfo) => (
+                    <div
+                      key={singleInfo.id}
+                      className="flex gap-2 items-center"
+                    >
+                      {singleInfo.icon}
+                      <div className="text-2xl font-medium">
+                        <h2>{singleInfo.title}</h2>
+                        <p className="flex items-center">
+                          {singleForecast?.[singleInfo.weatherApiPropertyName]}
+                          {singleInfo.tag && singleInfo?.tag}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                {/* <Button color="primary" onPress={onClose}>
-                  Action
-                </Button> */}
               </ModalFooter>
             </>
           )}
