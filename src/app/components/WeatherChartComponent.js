@@ -6,13 +6,23 @@ import { useEffect, useState } from "react";
 const WeatherChartComponent = ({ forecast, selectedTab }) => {
   const [chartOptions, setChartOptions] = useState({
     data: [],
-    series: [{ type: "line", xKey: "time", yKey: selectedTab }],
+    series: [
+      {
+        type: "line",
+        xKey: "time",
+        yKey: selectedTab,
+      },
+    ],
     axes: [
       {
         type: "category",
         position: "bottom",
         title: {
           text: "Time",
+          color: "white",
+        },
+        label: {
+          color: "white",
         },
       },
       {
@@ -20,13 +30,24 @@ const WeatherChartComponent = ({ forecast, selectedTab }) => {
         position: "left",
         title: {
           text: helper.constructYAxisName(selectedTab),
+          color: "white",
         },
         label: {
           formatter: ({ value }) =>
             value + helper.getLabelTypeOfYAxis(selectedTab),
+          color: "white",
         },
       },
     ],
+    theme: {
+      overrides: {
+        common: {
+          background: {
+            fill: "transparent",
+          },
+        },
+      },
+    },
   });
 
   useEffect(() => {
@@ -37,10 +58,14 @@ const WeatherChartComponent = ({ forecast, selectedTab }) => {
         prevOptions.axes[0],
         {
           ...prevOptions.axes[1],
-          title: { text: helper.constructYAxisName(selectedTab) },
+          title: {
+            text: helper.constructYAxisName(selectedTab),
+            color: "white",
+          },
           label: {
             formatter: ({ value }) =>
               value + helper.getLabelTypeOfYAxis(selectedTab),
+            color: "white",
           },
         },
       ],

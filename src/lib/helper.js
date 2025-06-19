@@ -93,9 +93,37 @@ const getLabelTypeOfYAxis = (value) => {
   }
 };
 
+const mapConditionToCategory = (text) => {
+  const t = text.toLowerCase();
+  if (t.includes("thunder") || t.includes("storm")) return "thunderstorm sky";
+  if (t.includes("rain") || t.includes("drizzle") || t.includes("shower"))
+    return "rainy sky";
+  if (t.includes("snow") || t.includes("blizzard") || t.includes("sleet"))
+    return "snowy sky";
+  if (t.includes("mist") || t.includes("fog")) return "foggy sky";
+  if (t.includes("clear") || t === "sunny") return "clear sky";
+  if (t.includes("cloud")) return "cloudy sky";
+  if (t.includes("overcast")) return "overcast sky";
+
+  return "weather sky";
+};
+
+const staticImageMap = {
+  "rainy sky": "/rain.jpg",
+  "snowy sky": "/snow.jpg",
+  "foggy sky": "/mist.jpg",
+  "clear sky": "/sunny.jpg",
+  "cloudy sky": "/clouds.jpg",
+  "thunderstorm sky": "/thunder.jpg",
+  "overcast sky": "/overcast.jpg",
+  "weather sky": "/default.jpg",
+};
+
 export default {
   currentWeatherInfo,
   constructYAxisName,
   getLabelTypeOfYAxis,
   modalWeatherInfo,
+  mapConditionToCategory,
+  staticImageMap,
 };

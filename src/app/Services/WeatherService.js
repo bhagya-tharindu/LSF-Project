@@ -1,3 +1,4 @@
+import axios from "axios";
 import instance from "../utils/axios";
 
 const getWeatherStatus = async (location) => {
@@ -34,4 +35,7 @@ const getFutureForecast = async (date, location) => {
   }
 };
 
-export default { getWeatherStatus, getFutureForecast };
+export default {
+  getWeatherStatus,
+  getFutureForecast,
+};
