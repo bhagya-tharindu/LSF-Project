@@ -65,7 +65,7 @@ const WeatherReport = ({
           {isLoading ? (
             <Skeleton className="w-[80px] h-[20px] mt-2 mx-auto" />
           ) : (
-            <h2 className="text-center flex gap-1 items-center">
+            <h2 className="text-center flex gap-1 items-center justify-center">
               <FaLocationDot className="inline-block" />
               {location?.name},{location?.country}
             </h2>
