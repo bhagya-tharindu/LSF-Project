@@ -12,7 +12,7 @@ export default function Home() {
   const [forecast, setForecast] = useState(null);
   const [search, setSearch] = useState("Colombo");
   const [loading, setloading] = useState(true);
-  const [forecastIsLoading, setForecastIsloading] = useState(false);
+  const [forecastIsLoading, setForecastIsLoading] = useState(false);
   const [initialDate, setInitialDate] = useState(null);
   const [forecastSelectedTab, setForecastSelectedTab] = useState("feelslike_c");
   const [errorMsg, setErrorMsg] = useState("");
@@ -52,7 +52,7 @@ export default function Home() {
 
   const fetchForeCastData = async () => {
     try {
-      setForecastIsloading(true);
+      setForecastIsLoading(true);
       const resp = await WeatherService.getFutureForecast(
         initialDate,
         location?.name || ""
@@ -65,7 +65,7 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     } finally {
-      setForecastIsloading(false);
+      setForecastIsLoading(false);
     }
   };
 
@@ -74,7 +74,6 @@ export default function Home() {
       className="relative min-h-screen bg-cover bg-center text-white"
       style={{ backgroundImage: `url(${bgImageUrl})` }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/30 z-0"></div>
       <div className="relative z-10 max-w-[1200px] mx-auto py-[40px] w-[90%]">
         <div className="">

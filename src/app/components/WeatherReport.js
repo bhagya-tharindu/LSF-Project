@@ -7,6 +7,7 @@ import DatePickerComponent from "./DatePickerComponent";
 import PopOverModal from "./PopOverModal";
 import WeatherChartComponent from "./WeatherChartComponent";
 import { Tabs, Tab } from "@heroui/tabs";
+import { FaLocationDot } from "react-icons/fa6";
 
 const WeatherReport = ({
   forecast,
@@ -29,10 +30,14 @@ const WeatherReport = ({
 
   return (
     <div className="mt-[40px]">
-      <h2 className="text-center text-2xl font-medium mb-8">
+      <h2
+        className={`text-center text-2xl font-medium mb-8 ${
+          isLoading ? "flex items-center justify-center gap-2" : ""
+        }`}
+      >
         Current Weather in{" "}
         {isLoading ? (
-          <Skeleton className="w-[100px] h-[30px] inline-block" />
+          <Skeleton className="w-[150px] h-[30px] inline-block" />
         ) : (
           <span>
             {location?.name},{location?.country}
@@ -60,7 +65,8 @@ const WeatherReport = ({
           {isLoading ? (
             <Skeleton className="w-[80px] h-[20px] mt-2 mx-auto" />
           ) : (
-            <h2 className="text-center">
+            <h2 className="text-center flex gap-1 items-center">
+              <FaLocationDot className="inline-block" />
               {location?.name},{location?.country}
             </h2>
           )}
@@ -96,10 +102,14 @@ const WeatherReport = ({
       </div>
       {/* forecast section */}
       <div>
-        <h2 className="text-center text-2xl font-medium mb-10">
+        <h2
+          className={`text-center text-2xl font-medium mb-10 ${
+            isLoading ? "flex items-center justify-center gap-2" : ""
+          }`}
+        >
           Weather Forecast of{" "}
           {isLoading ? (
-            <Skeleton className="w-[100px] h-[30px] inline-block" />
+            <Skeleton className="w-[150px] h-[30px] inline-block" />
           ) : (
             <span>
               {location?.name},{location?.country}
